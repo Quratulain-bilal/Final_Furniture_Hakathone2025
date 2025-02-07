@@ -49,13 +49,7 @@ export default function NavBar() {
               isSignedIn={isSignedIn}
               user={user}
             />
-            {/* Checkout Icon */}
-            <Link href="/checkout">
-              <button className="p-1 sm:p-2 relative">
-                <CreditCard className="h-8 w-8" /> {/* Checkout icon */}
-                <span className="sr-only">Checkout</span>
-              </button>
-            </Link>
+       
             {/* Hamburger Menu - Visible only on mobile */}
             <Sheet>
               <SheetTrigger asChild>
@@ -150,14 +144,14 @@ function NavIcons({
       ) : (
         <SignInButton mode="redirect">
           <button className="p-1 sm:p-2 flex items-center space-x-2">
-            <User className="h-8 w-8" /> {/* Increased icon size */}
+            <User className="h-6 w-6" /> {/* Increased icon size */}
             <span className="text-base font-medium">Login</span>
           </button>
         </SignInButton>
       )}
       <Link href="/wishlist">
         <button className="p-1 sm:p-2 relative">
-          <Heart className="h-8 w-8" /> {/* Increased icon size */}
+          <Heart className="h-6 w-6" /> {/* Increased icon size */}
           {wishlistItemCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-primary text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
               {wishlistItemCount}
@@ -169,7 +163,7 @@ function NavIcons({
       <Sheet>
         <SheetTrigger asChild>
           <button className="p-1 sm:p-2 relative">
-            <ShoppingCart className="h-8 w-8" /> {/* Increased icon size */}
+            <ShoppingCart className="h-6 w-6" /> {/* Increased icon size */}
             {cartItemCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
                 {cartItemCount}

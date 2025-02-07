@@ -1,10 +1,10 @@
-import { client } from './client';
+import { client } from "./client";
 
 export const fetchProductData = async () => {
   const query = `*[_type == "shopProduct"]{
     _id,
     title,
-   "slug": slug.current, 
+    "slug": slug.current,
     price,
     description,
     "image": image.asset->url,
@@ -44,8 +44,6 @@ export const fetchSingleProduct = async (slug: string) => {
   }
 };
 
-
-
 export const fetchSingleProductWithReviews = async (slug: string) => {
   const query = `*[_type == "shopProduct" && slug.current == $slug][0]{
     _id,
@@ -62,16 +60,18 @@ export const fetchSingleProductWithReviews = async (slug: string) => {
       _id,
       text,
       userName,
-      createdAt
+      createdAt,
+      rating
     }
   }`;
   try {
     const result = await client.fetch(query, { slug });
     return result;
   } catch (error) {
-    console.error("Error fetching single product with reviews from Sanity:", error);
+    console.error(
+      "Error fetching single product with reviews from Sanity:",
+      error
+    );
     throw error;
   }
 };
-
-

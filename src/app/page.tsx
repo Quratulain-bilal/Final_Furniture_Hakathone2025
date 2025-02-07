@@ -2,8 +2,8 @@ import Blog from "@/components/Blog";
 import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Instra from "@/components/Instra";
-import Product2 from "@/components/Product2";
 import Product from "@/components/Product";
+import ProductCarousel from "@/components/ProductCorouseal";
 
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
    <>
    <Hero />
    <Gallery />
-   <Product2 />
+   <ProductCarousel />
    <Product />
    <Instra />
    

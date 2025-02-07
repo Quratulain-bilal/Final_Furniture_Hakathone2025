@@ -1,8 +1,8 @@
 // pages/Blogpage/[id]/page.tsx
-"use client"
+"use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Comment from "../../../components/Comment"
+import Comment from "../../../components/Reviews";
 
 // Define the BlogPost type directly in this file
 interface BlogPost {
@@ -28,7 +28,7 @@ const BlogPostPage: React.FC = () => {
       category: "Wood",
       title: "Going all-in with millennial design",
       content:
-        "This blog post explores the millennial design trend, focusing on how it integrates modern aesthetics with functionality. Millennial design emphasizes clean lines, minimalism, and the use of natural materials. In this post, we will delve into various aspects of millennial design, including color palettes, furniture choices, and how to create a harmonious living space that reflects this trend. Whether you're redecorating your home or just looking for inspiration, this post will provide valuable insights and tips.",
+        "This blog post explores the millennial design trend, focusing on how it integrates modern aesthetics with functionality. Millennial design emphasizes clean lines, minimalism, and the use of natural materials. In this post, we will delve into various aspects of millennial design, including color palettes, furniture choices, and how to create a harmonious living space that reflects this trend. Whether you're redecorating your home or just looking for inspiration, this post will provide valuable insights and tips Selecting the right furniture for your home is a crucial decision that impacts both the functionality and aesthetic appeal of your living space. Start by assessing your available space; measure your rooms to ensure that the furniture you choose fits comfortably without overcrowding. Consider your lifestyle needs—families with children may require durable, easy-to-clean materials, while those who entertain often might prioritize stylish seating arrangements. Additionally, think about the materials and styles that resonate with you. From the warmth of solid wood to the sleekness of metal, each material brings its own character. Ultimately, the right furniture should not only complement your home’s decor but also enhance your daily life, providing comfort and utility.",
       imageUrl:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/4afabaa3dd6fda83227fb086cb291079c2a734262400f70b0fb72d5dfbbc124a?placeholderIfAbsent=true&apiKey=b77517f4450544a992d89244a6a7443d",
     },
@@ -39,7 +39,7 @@ const BlogPostPage: React.FC = () => {
       category: "Handmade",
       title: "Exploring new ways of decorating",
       content:
-        "In this post, we explore innovative decorating techniques that incorporate handmade elements. From DIY projects to sourcing unique handmade items, this guide will help you add a personal touch to your home decor. We will discuss the importance of supporting local artisans and how handmade items can bring character and warmth to your living space. Join us as we uncover creative ways to enhance your home with handmade decor.",
+        "In this post, we explore innovative decorating techniques that incorporate handmade elements. From DIY projects to sourcing unique handmade items, this guide will help you add a personal touch to your home decor. We will discuss the importance of supporting local artisans and how handmade items can bring character and warmth to your living space. Join us as we uncover creative ways to enhance your home with handmade decorSelecting the right furniture for your home is a crucial decision that impacts both the functionality and aesthetic appeal of your living space. Start by assessing your available space; measure your rooms to ensure that the furniture you choose fits comfortably without overcrowding. Consider your lifestyle needs—families with children may require durable, easy-to-clean materials, while those who entertain often might prioritize stylish seating arrangements. Additionally, think about the materials and styles that resonate with you. From the warmth of solid wood to the sleekness of metal, each material brings its own character. Ultimately, the right furniture should not only complement your home’s decor but also enhance your daily life, providing comfort and utility .",
       imageUrl:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/d0019ed79f1b2027e1802a99b8ba2ec5e7bbdb80682b49273af5f504752c96a5?placeholderIfAbsent=true&apiKey=b77517f4450544a992d89244a6a7443d",
     },
@@ -50,7 +50,7 @@ const BlogPostPage: React.FC = () => {
       category: "Design",
       title: "The Future of Sustainable Design",
       content:
-        "Sustainable design is not just a trend; it's a necessity. This post discusses the principles of sustainable design and how they can be applied in various fields, from architecture to product design. We will explore innovative materials, energy-efficient practices, and the importance of creating designs that are both functional and environmentally friendly.",
+        "Sustainable design is not just a trend; it's a necessity. This post discusses the principles of sustainable design and how they can be applied in various fields, from architecture to product design. We will explore innovative materials, energy-efficient practices, and the importance of creating designs that are both functional and environmentally friendlySelecting the right furniture for your home is a crucial decision that impacts both the functionality and aesthetic appeal of your living space. Start by assessing your available space; measure your rooms to ensure that the furniture you choose fits comfortably without overcrowding. Consider your lifestyle needs—families with children may require durable, easy-to-clean materials, while those who entertain often might prioritize stylish seating arrangements. Additionally, think about the materials and styles that resonate with you. From the warmth of solid wood to the sleekness of metal, each material brings its own character. Ultimately, the right furniture should not only complement your home’s decor but also enhance your daily life, providing comfort and utility.",
       imageUrl:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/3632bab0a2543d9df160a31963ae66a4659c5402c353e5d1c837d39fc64d9a1a?placeholderIfAbsent=true&apiKey=b77517f4450544a992d89244a6a7443d",
     },
@@ -106,9 +106,8 @@ const BlogPostPage: React.FC = () => {
       </div>
       <p className="mt-4 text-lg leading-relaxed text-center">{post.content}</p>{" "}
       {/* Increased font size and line height for better readability */}
-      <Comment />
+      <Comment productId={""} />
     </div>
-    
   );
 };
 

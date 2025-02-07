@@ -1,9 +1,11 @@
-"use client";
-import React, { useState, FormEvent } from "react";
+import { client } from "@/sanity/lib/client";
+import { useEffect, useState } from "react";
+import { FormEvent } from "react";
+import { toast } from "react-toastify";
 
 // Define the type for a comment
 interface Comment {
-  id: number;
+  _id: string; // Use _id from Sanity
   name: string;
   text: string;
   rating: number;
@@ -30,30 +32,68 @@ const StarRating: React.FC<{
 };
 
 // CommentSection Component
-const CommentSection: React.FC = () => {
+const CommentSection: React.FC<{ productId: string }> = ({ productId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newName, setNewName] = useState<string>("");
   const [newComment, setNewComment] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
 
-  const handleAddComment = (e: FormEvent<HTMLFormElement>) => {
+  // Fetch existing comments from Sanity
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const fetchedComments = await client.fetch(
+          `*[_type == "comment" && productId == $productId]`,
+          { productId }
+        );
+        setComments(fetchedComments);
+      } catch (error) {
+        console.error("Error fetching comments: ", error);
+        toast.error("Failed to load comments.");
+      }
+    };
+
+    fetchComments();
+  }, [productId]);
+
+  const handleAddComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newName.trim() && newComment.trim() && rating > 0) {
-      const comment: Comment = {
-        id: Date.now(),
+      const newCommentItem = {
+        _type: "comment",
+        productId: productId,
         name: newName,
         text: newComment,
         rating: rating,
+        createdAt: new Date().toISOString(),
       };
-      setComments([...comments, comment]);
-      setNewName("");
-      setNewComment("");
-      setRating(0);
+
+      try {
+        const createdComment = await client.create(newCommentItem);
+        setComments([
+          ...comments,
+          { ...newCommentItem, _id: createdComment._id },
+        ]); // Add the new comment with its _id
+        setNewName("");
+        setNewComment("");
+        setRating(0);
+        toast.success("Comment added successfully!");
+      } catch (error) {
+        console.error("Error adding comment: ", error);
+        toast.error("Failed to add comment. Please try again.");
+      }
     }
   };
 
-  const handleDeleteComment = (id: number) => {
-    setComments(comments.filter((comment) => comment.id !== id));
+  const handleDeleteComment = async (id: string) => {
+    try {
+      await client.delete(id); // Delete from Sanity
+      setComments(comments.filter((comment) => comment._id !== id)); // Update local state
+      toast.success("Comment deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting comment: ", error);
+      toast.error("Failed to delete comment. Please try again.");
+    }
   };
 
   return (
@@ -77,10 +117,7 @@ const CommentSection: React.FC = () => {
           required
         />
         <StarRating rating={rating} onRatingChange={setRating} />
-        <button
-          type="submit"
-          className="mt-2 bg-black text-white p-2 rounded"
-        >
+        <button type="submit" className="mt-2 bg-black text-white p-2 rounded">
           Add Comment
         </button>
       </form>
@@ -91,7 +128,7 @@ const CommentSection: React.FC = () => {
         ) : (
           comments.map((comment) => (
             <div
-              key={comment.id}
+              key={comment._id} // Use _id from Sanity
               className="border w-64 p-4 rounded-lg shadow-lg bg-white transition-transform transform hover:scale-105"
             >
               <p className="font-semibold text-lg">
@@ -100,7 +137,7 @@ const CommentSection: React.FC = () => {
               </p>
               <p className="text-gray-700">{comment.text}</p>
               <button
-                onClick={() => handleDeleteComment(comment.id)}
+                onClick={() => handleDeleteComment(comment._id)} // Use _id for deletion
                 className="text-red-500 mt-2 hover:underline"
               >
                 Delete
@@ -113,12 +150,4 @@ const CommentSection: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <CommentSection />
-    </div>
-  );
-};
-
-export default App;
+export default CommentSection;

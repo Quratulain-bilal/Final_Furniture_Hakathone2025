@@ -1,83 +1,110 @@
 "use client";
 
+import type React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { fetchProductData } from "@/sanity/lib/fetchData";
 
 interface Product {
   _id: string;
   title: string;
   slug: string;
-  price: number;
   image: string;
+  category: string;
+  discountPercentage: number;
+  isFeaturedProduct: boolean;
+  stockLevel: number;
 }
 
-const RelatedProduct = () => {
+export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadProducts = async () => {
+    async function fetchProducts() {
+      setIsLoading(true);
+      setError(null);
       try {
-        const data = await fetchProductData();
-        setProducts(data.slice(8, 12)); // Take products 8-12
+        const data = (await fetchProductData()) as Product[];
+        setProducts(data || []);
       } catch (error) {
-        console.error("Error loading products:", error);
+        console.error("Error fetching products:", error);
+        setError("Failed to fetch products. Please try again later.");
       } finally {
         setIsLoading(false);
       }
-    };
-    loadProducts();
+    }
+    fetchProducts();
   }, []);
 
   if (isLoading) {
-    return <div className="text-center py-12">Loading...</div>;
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        Loading products...
+      </div>
+    );
   }
 
-  return (
-    <section className="container mx-auto px-4 py-12">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold mb-4">Related produts </h2>
-        <p className="text-gray-600">
-          Find a bright ideal to suit your taste with our great selection of
-          suspension, floor, and table lights.
-        </p>
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center text-red-500">
+        {error}
       </div>
+    );
+  }
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <div
+  // Limit to 4 products
+  const limitedProducts = products.slice(0, 4);
+
+  return (
+    <section className="container mx-auto px-4 py-8">
+      {/* Heading for Related Products */}
+      <h2 className="text-center text-2xl font-bold mb-6">Related Products</h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        {limitedProducts.map((product) => (
+          <Card
             key={product._id}
-            className="border rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg"
+            className="group relative overflow-hidden transition-all duration-500 hover:shadow-lg border-none shadow-sm h-[400px] w-full" // Set a fixed height and width
           >
-            <Link href={`/shop/${product.slug}`}>
-              <div className="aspect-square relative overflow-hidden cursor-pointer">
+            <CardHeader className="p-0">
+              <div className="relative overflow-hidden h-80">
+                {" "}
+                {/* Increased height for the image container */}
                 <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.title}
-                  fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
+                  layout="fill" // Use layout fill to cover the area
+                  objectFit="cover" // Ensure the image covers the area
+                  priority
+                  className="w-full h-full object-cover"
                 />
               </div>
-            </Link>
-            <div className="p-4">
+            </CardHeader>
+            <CardContent className="pt-4">
               <Link href={`/shop/${product.slug}`}>
-                <h3 className="text-base font-medium line-clamp-2 hover:text-blue-600 transition-colors duration-300">
+                <CardTitle className="text-lg font-medium line-clamp-2 hover:text-primary transition-colors duration-300">
                   {product.title}
-                </h3>
+                </CardTitle>
               </Link>
-              <p className="text-lg font-semibold mt-2">
-                Rs. {product.price.toLocaleString()}
-              </p>
-            </div>
-          </div>
+            </CardContent>
+            <CardFooter>
+              <div className="flex items-center gap-2">
+                {/* Additional footer content can go here */}
+              </div>
+            </CardFooter>
+          </Card>
         ))}
       </div>
-
-      <div className="text-center mt-10"></div>
     </section>
   );
-};
-
-export default RelatedProduct;
+}

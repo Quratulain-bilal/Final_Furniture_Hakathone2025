@@ -19,7 +19,7 @@ import {
 import { CheckCircle2 } from "lucide-react";
 import { getStripe } from "@/lib/get-stripe";
 import { client } from "@/sanity/lib/client";
-
+import Feature from "@/components/Feature";
 
 // Define the structure of the form data
 interface FormData {
@@ -226,10 +226,12 @@ const Checkout: React.FC = () => {
         {/* 2nd Section: Billing Details and Product Information */}
         <section className="bg-white py-10">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {/* First Column: Billing Details */}
               <div className="space-y-6">
-                <h1 className="text-5xl font-bold">Billing Details</h1>
+                <h1 className="text-3xl sm:text-5xl font-bold">
+                  Billing Details
+                </h1>
                 <form className="space-y-4">
                   {/* First Name */}
                   <div>
@@ -246,7 +248,7 @@ const Checkout: React.FC = () => {
                       value={formData.firstName}
                       onChange={handleInputChange}
                       placeholder="Enter your first name"
-                      className={`w-full h-20 border ${errors.firstName ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100 h-20`}
+                      className={`w-full h-12 sm:h-20 border ${errors.firstName ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.firstName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -269,7 +271,7 @@ const Checkout: React.FC = () => {
                       value={formData.lastName}
                       onChange={handleInputChange}
                       placeholder="Enter your last name"
-                      className={`w-full h-20 p-3 border ${errors.lastName ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.lastName ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.lastName && (
                       <p className="text-red-500 text-sm mt-1">
@@ -292,7 +294,7 @@ const Checkout: React.FC = () => {
                       value={formData.companyName}
                       onChange={handleInputChange}
                       placeholder="Enter your company name"
-                      className="w-full h-20 p-3 border border-gray-300 rounded-md placeholder-black-100"
+                      className="w-full h-12 sm:h-20 p-3 border border-gray-300 rounded-md placeholder-black-100"
                     />
                   </div>
                   {/* Country/Region */}
@@ -310,7 +312,7 @@ const Checkout: React.FC = () => {
                       value={formData.country}
                       onChange={handleInputChange}
                       placeholder="Enter your country"
-                      className={`w-full h-20 p-3 border ${errors.country ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.country ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.country && (
                       <p className="text-red-500 text-sm mt-1">
@@ -333,7 +335,7 @@ const Checkout: React.FC = () => {
                       value={formData.streetAddress}
                       onChange={handleInputChange}
                       placeholder="Enter your street address"
-                      className={`w-full h-20 p-3 border ${errors.streetAddress ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.streetAddress ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.streetAddress && (
                       <p className="text-red-500 text-sm mt-1">
@@ -356,7 +358,7 @@ const Checkout: React.FC = () => {
                       value={formData.townCity}
                       onChange={handleInputChange}
                       placeholder="Enter your town or city"
-                      className={`w-full h-20 p-3 border ${errors.townCity ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.townCity ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.townCity && (
                       <p className="text-red-500 text-sm mt-1">
@@ -379,7 +381,7 @@ const Checkout: React.FC = () => {
                       value={formData.province}
                       onChange={handleInputChange}
                       placeholder="Enter your province"
-                      className={`w-full h-20 p-3 border ${errors.province ? "border-red-500" : "border-gray-300"} rounded-md placeholder-amber-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.province ? "border-red-500" : "border-gray-300"} rounded-md placeholder-amber-100`}
                     />
                     {errors.province && (
                       <p className="text-red-500 text-sm mt-1">
@@ -402,7 +404,7 @@ const Checkout: React.FC = () => {
                       value={formData.zipCode}
                       onChange={handleInputChange}
                       placeholder="Enter your ZIP code"
-                      className={`w-full h-20 p-3 border ${errors.zipCode ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.zipCode ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.zipCode && (
                       <p className="text-red-500 text-sm mt-1">
@@ -425,7 +427,7 @@ const Checkout: React.FC = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
-                      className={`w-full h-20 p-3 border ${errors.phone ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.phone ? "border-red-500" : "border-gray-300"} rounded-md placeholder-black-100`}
                     />
                     {errors.phone && (
                       <p className="text-red-500 text-sm mt-1">
@@ -448,7 +450,7 @@ const Checkout: React.FC = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Enter your email"
-                      className={`w-full h-20  p-3 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-md placeholder-amber-100`}
+                      className={`w-full h-12 sm:h-20 p-3 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-md placeholder-amber-100`}
                     />
                     {errors.email && (
                       <p className="text-red-500 text-sm mt-1">
@@ -477,7 +479,7 @@ const Checkout: React.FC = () => {
               </div>
 
               {/* Second Column: Product Information */}
-              <div className="space-y-6 h-10">
+              <div className="space-y-6">
                 <h1 className="text-3xl font-bold h-20">
                   Product <span className="text-end">Subtotal</span>
                 </h1>
@@ -543,7 +545,7 @@ const Checkout: React.FC = () => {
                 </p>
                 {/* Place Order Button */}
                 <Button
-                  className="w-full h-20 py-3 bg-transparent border border-black rounded-md text-black text-lg hover:bg-black hover:text-white transition"
+                  className="w-full h-12 sm:h-20 py-3 bg-transparent border border-black rounded-md text-black text-lg hover:bg-black hover:text-white transition"
                   onClick={handlePlaceOrder}
                   disabled={isLoading}
                 >
@@ -578,7 +580,7 @@ const Checkout: React.FC = () => {
           </DialogContent>
         </Dialog>
       </div>
-      
+      <Feature />
     </>
   );
 };
